@@ -3,6 +3,16 @@
 
 Well, of course you can also set up the bindings with JavaScript only without TypeScript. But like what you normally do with Angular2 projects, with TypeScript, it is a lot earsier.
 
+**Please use ES5 mode in TypeScript compiler** javascript ES6 changed the class definition strategy to
+```javascript
+class ClassName extends Ancestor{
+
+}
+```
+Since errisy-bindable has constructor manipulation in the @obs.bindable decorator, and the ES6 constructor can not be properly accessed by the new internal class constructor in the @obs.bindable decorator. So please use ES5 at the moment.
+
+ES6 mode will be supported later.
+
 to install errisy-bindable
 
 ```
@@ -29,8 +39,96 @@ What is real object-to-object binding? It means when binding is set up, changing
 If you have object A, and you set up A.x binding to A.y, where A.y is a property that anything can be assigned to there.
 So errisy-bindable ensures that when you set another object to A.y, the A.x will be automatically updated to the new object.
 
+### wrap of native elements
+Those bindings only works with objects you defined. For native elements/javascript objects, since they won't send changed signal to our bindable objects, we use **wrap** method to wrap them.
+
+### try out the test:
+In the following test you will see that errisy-bindable does wrap, two-way binding.
+```
+export class NativeElement {
+    private _value: string;
+    public get value(): string {
+        return this._value;
+    }
+    public set value(value: string) {
+        console.log(`value of NativeElement is set to ${value}`);
+        this._value = value;
+    }
+}
+
+@obs.bindable
+export class Leg {
+    @obs.property
+    public length: number;
+}
+
+ 
+
+@obs.bindable
+export class Dog   {
+
+    @obs.property public leg: Leg;
+    @obs.property public native: NativeElement;
+
+    @obs.bind(() => Dog.prototype.leg.length, PathBindingMode.syncFrom)
+        .before(() => Dog.prototype.BeforeLegLengthChanged)
+        .after(() => Dog.prototype.AfterLegLengthChanged)
+        .wrap(() => Dog.prototype.native.value)
+        .property
+    public legLength: number;
+
+    @obs.event
+    public BeforeLegLengthChanged() {
+        console.log('BeforeLegLengthChanged', arguments);
+    }
+
+    @obs.event
+    public AfterLegLengthChanged() {
+        console.log('AfterLegLengthChanged', arguments);
+    }
+}
+
+
+class TestCases {
+    public bind() {
+        let dog = new Dog();
+        let leg = new Leg();
+        let native = new NativeElement();
+        dog.native = native;
+
+        console.log('>>> Set dog.leg = leg');
+        dog.leg = leg;
+
+        let doc = obs.getDecorator(dog, 'leg', true);
+
+        console.log('leg decorator: ', doc);
+
+        console.log('>>> Set leg.length = 20');
+        leg.length = 20;
+
+        console.log('>>> Check dog.legLength: ', dog.legLength, ' <-- this means after you assign let to dog.leg, when you change leg.length, dog.legLength is automatically updated.');
+
+        console.log('>>> Set dog.legLength = 30');
+        dog.legLength = 30;
+
+        console.log('>>> Check leg.length: ', leg.length);
+    }
+
+}
+```
+
+
 ### observe collection and subscribe collection events
 Similar to previous case, you can set up A.x to observe the collection A.y, and listen the event of every element in A.y.
+
+### Typed Serialization and Deserialization
+errisy-bindable has an out-of-box serialization and deserialization system.
+For a @obs.bindable decorated type/class, you can serialize it into string and deserialize to the original type/class.
+This is very useful feature in the front-end UI. In complex front UI, you may need to rebuild the UI from a simple deserialization, rather than writing codes to build them manually. If you have properly set up UI framework element binding to the @obs.bindable objects, the UI can be rebuild during deserialization.
+
+In my case, I can serialize multiple gene vectors view in my project: 
+
+![Example](https://github.com/errisy/errisy-bindable/blob/master/example.png)
 
 
 ### That's pretty much all you need to build your own MVVM on top of any UI framework.
