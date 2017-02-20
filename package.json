@@ -1,6 +1,6 @@
 {
   "name": "errisy-bindable",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "a native JavaScript object-to-object binding framework based on TypeScript decorators",
   "main": "index.js",
   "scripts": {
