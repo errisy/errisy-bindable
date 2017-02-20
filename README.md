@@ -126,7 +126,7 @@ errisy-bindable has an out-of-box serialization and deserialization system.
 For a @obs.bindable decorated type/class, you can serialize it into string and deserialize to the original type/class.
 This is very useful feature in the front-end UI. In complex front UI, you may need to rebuild the UI from a simple deserialization, rather than writing codes to build them manually. If you have properly set up UI framework element binding to the @obs.bindable objects, the UI can be rebuild during deserialization.
 
-In my case, I can serialize multiple gene vectors view in my project, where [EaselJ](http://www.createjs.com/easeljs "EaselJ")S is wrapped with errisy-bindable: 
+In my case, I can serialize multiple gene vectors view in my project, where [EaselJS](http://www.createjs.com/easeljs "EaselJS") is wrapped with errisy-bindable: 
 
 ![Example](https://github.com/errisy/errisy-bindable/blob/master/example.png)
 
