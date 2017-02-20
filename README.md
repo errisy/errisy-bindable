@@ -1,8 +1,7 @@
-# errisy-bindable native JavaScript object-to-object binding via TypeScript decorators with out-of-box type-to-type serialization-deserialztion solution.
+# errisy-bindable 
+* the native JavaScript object-to-object binding via TypeScript decorators with out-of-box type-to-type serialization-deserialztion solution.
 
-Well, of course you can also set up the bindings with JavaScript.
-
-* This package has been upgraded as npm module errisy-bindable, use the following command to install errisy-bindable (updated in Fed 2017):
+Well, of course you can also set up the bindings with JavaScript only without TypeScript. But like what you normally do with Angular2 projects, with TypeScript, it is a lot earsier.
 
 to install errisy-bindable
 
@@ -21,7 +20,22 @@ This native JavaScript two-way binding framework offers a front-end UI style tha
 
 ## What does it do?
 
-*
+### object-to-object binding
+There is no real object-to-object binding in most of the front end frameworks such as Angular or Knockout. The bindings are only between UI field/presentation and the object (at least in the case of Angular 1 & 2).
+
+What is real object-to-object binding? It means when binding is set up, changing the value of one object will affect the bound property and vice versa.
+
+### weak binding to field (not to object itself).
+If you have object A, and you set up A.x binding to A.y, where A.y is a property that anything can be assigned to there.
+So errisy-bindable ensures that when you set another object to A.y, the A.x will be automatically updated to the new object.
+
+### observe collection and subscribe collection events
+Similar to previous case, you can set up A.x to observe the collection A.y, and listen the event of every element in A.y.
+
+
+### That's pretty much all you need to build your own MVVM on top of any UI framework.
+
+
 
 ## How does it work?
 bindable ts enables simple binding set up with member decorators
