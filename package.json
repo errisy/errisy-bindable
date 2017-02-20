@@ -1,0 +1,19 @@
+{
+  "name": "errisy-bindable",
+  "version": "1.0.0",
+  "description": "a native JavaScript object-to-object binding framework based on TypeScript decorators",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "two-way",
+    "binding",
+    "native",
+    "object",
+    "binding",
+    "TypeScript"
+  ],
+  "author": "Zhenyu Shi",
+  "license": "ISC"
+}
