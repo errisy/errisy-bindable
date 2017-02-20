@@ -2360,13 +2360,13 @@ var obp = (function () {
     };
     obp.analyzePath = function (value) {
         if (!value)
-            return [];
+            return;
         var code;
         var result = [];
         if (obs.isFunction(value)) {
             var f = value;
             code = f.toString();
-            var mr = /(return|\s*\(\s*\)\s*=>)\s+/ig.exec(code); // need to match return or ()=> for ES5 and ES6
+            var mr = /return\s+/ig.exec(code);
             code = code.substr(mr.index + mr[0].length);
         }
         else {
@@ -3211,7 +3211,7 @@ var obs = (function () {
      */
     obs.deserialize = function (jsonObject) {
         return __awaiter(this, void 0, void 0, function () {
-            var arr, length_1, i, _a, _b, _c, moduleName, typeName, module_1, type, instance, _d, _e, _i, property, arr, obsArr, i, _f, _g, _h, _j, _k, ex_1, descriptor, i, _l, _m, instance, i, _o, _p, instance, _q, _r, _s, key, _t, _u;
+            var arr, length_1, i, _a, _b, _c, moduleName, typeName, module, type, instance, _d, _e, _i, property, arr, obsArr, i, _f, _g, _h, _j, _k, ex_1, descriptor, i, _l, _m, instance, i, _o, _p, instance, _q, _r, _s, key, _t, _u;
             return __generator(this, function (_v) {
                 switch (_v.label) {
                     case 0:
@@ -3255,8 +3255,8 @@ var obs = (function () {
                         typeName = jsonObject['@ObjectService.TypeName'];
                         return [4 /*yield*/, System.import(moduleName)];
                     case 7:
-                        module_1 = _v.sent();
-                        type = module_1[typeName];
+                        module = _v.sent();
+                        type = module[typeName];
                         instance = new type();
                         _d = [];
                         for (_e in jsonObject)
@@ -3593,7 +3593,7 @@ var Unpacker = (function () {
     };
     Unpacker.prototype.deserialize = function (jsonObject, key) {
         return __awaiter(this, void 0, void 0, function () {
-            var instance, length_2, i, _a, _b, _c, moduleName, typeName, module_2, type, instance, _d, _e, _i, property, arr, obsArr, i, _f, _g, _h, _j, _k, ex_2, descriptor, i, _l, _m, instance, i, _o, _p, instance, _q, _r, _s, key_7, _t, _u;
+            var instance, length_2, i, _a, _b, _c, moduleName, typeName, module, type, instance, _d, _e, _i, property, arr, obsArr, i, _f, _g, _h, _j, _k, ex_2, descriptor, i, _l, _m, instance, i, _o, _p, instance, _q, _r, _s, key_7, _t, _u;
             return __generator(this, function (_v) {
                 switch (_v.label) {
                     case 0:
@@ -3637,8 +3637,8 @@ var Unpacker = (function () {
                         typeName = jsonObject['@ObjectService.TypeName'];
                         return [4 /*yield*/, System.import(moduleName)];
                     case 9:
-                        module_2 = _v.sent();
-                        type = module_2[typeName];
+                        module = _v.sent();
+                        type = module[typeName];
                         instance = new type();
                         if (typeof key == 'number')
                             this.instances[key] = instance; //assign instance for async process;

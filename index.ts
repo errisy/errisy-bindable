@@ -235,7 +235,7 @@ export class memberDecorator implements ICheck, IValidate {
     checker: (source: any, memberKey: string, decorators: memberDecorator[], ...args: any[]) => boolean;
     handler: (source: any, memberKey: string, decorators: memberDecorator[], args: any[]) => any;
     validator: (source: any, memberKey: string, decorators: memberDecorator[], newValue: any, oldValue: any) => any;
-    getter: ()=>any;
+    getter: () => any;
 
     private defaultPropertyValue: any;
 
@@ -1218,7 +1218,7 @@ export class memberDecorator implements ICheck, IValidate {
             //console.log('event invoker - begin invoke realValue: ', target, propertyKey, that.realValue, args);
             //console.log('event invoker - is function?: ', obs.isFunction(that.realValue), typeof that.realValue);
             if (obs.isFunction(that.RealValue)) result = that.RealValue.apply(target, args); // do not invoke if value is not a function;
-            
+
             that.afters = that.afters.filter(trigger => {
                 if (trigger && !obs.isDisposed(trigger.target)) {
                     //console.log('after tigger calling:', triggerArgs, trigger.path, trigger.method);
@@ -1799,11 +1799,11 @@ export class objectDecorator {
         }
         // the new constructor behaviour
 
-            //Object.defineProperty(instance, "@ObjectService.ConstructionStack", {\n\
-            //    configurable: false, \n\
-            //    enumerable: true, \n\
-            //    value: [original.name]\n\
-            //});\n\
+        //Object.defineProperty(instance, "@ObjectService.ConstructionStack", {\n\
+        //    configurable: false, \n\
+        //    enumerable: true, \n\
+        //    value: [original.name]\n\
+        //});\n\
 
         function setThat(value: any) {
             that = value;
@@ -1837,56 +1837,56 @@ export class objectDecorator {
     static setupBindable(that: any, classPrototype: Object) {
         //if (that['@ObjectService.ConstructionStack'].length == 1) {
 
-            //console.log('*** dcrs After Call Original: ', original.name, obp.getPathValue(that, p), obp.getPathValue(classPrototype, p),
-            //    obp.getPathValue(that, pp), obp.getPathValue(classPrototype, pp));
-            let prototypeDecorators: { [key: string]: memberDecorator } = classPrototype['@ObjectService.Decorators'];
+        //console.log('*** dcrs After Call Original: ', original.name, obp.getPathValue(that, p), obp.getPathValue(classPrototype, p),
+        //    obp.getPathValue(that, pp), obp.getPathValue(classPrototype, pp));
+        let prototypeDecorators: { [key: string]: memberDecorator } = classPrototype['@ObjectService.Decorators'];
 
-            let instanceDecorators: { [key: string]: memberDecorator } = that['@ObjectService.Decorators'];
+        let instanceDecorators: { [key: string]: memberDecorator } = that['@ObjectService.Decorators'];
 
-            //console.log('inherit structure:',
-            //    that['@ObjectService.ConstructionStack'].join(),
-            //    '---prototype decorators: ',
-            //    util.reduceOf(prototypeDecorators, (previous, key) => previous ? (previous + ', ' + key) : key),
-            //    '---instance decorators: ',
-            //    util.reduceOf(instanceDecorators, (previous, key) => previous ? (previous + ', ' + key) : key));
-
-
-            Object.defineProperty(that, '@ObjectService.Instance', {
-                configurable: false,
-                enumerable: false,
-                value: true,
-                writable: false
-            });
-            //Object.defineProperty(that, '@ObjectService.ModulePath', {
-            //    configurable: false,
-            //    enumerable: true,
-            //    value: obd.modulePath,
-            //    writable: false
-            //});
-            //Object.defineProperty(that, '@ObjectService.TypeName', {
-            //    configurable: false,
-            //    enumerable: true,
-            //    value: original.name,
-            //    writable: false
-            //});
-            Object.defineProperty(that, '@ObjectService.Decorators', {
-                configurable: false,
-                enumerable: false,
-                value: {},
-                writable: false
-            });
-
-            //get decorators from prototype:
-
-            //let decorators: memberDecorator[] = [];
+        //console.log('inherit structure:',
+        //    that['@ObjectService.ConstructionStack'].join(),
+        //    '---prototype decorators: ',
+        //    util.reduceOf(prototypeDecorators, (previous, key) => previous ? (previous + ', ' + key) : key),
+        //    '---instance decorators: ',
+        //    util.reduceOf(instanceDecorators, (previous, key) => previous ? (previous + ', ' + key) : key));
 
 
-            for (let key in instanceDecorators) {
-                that['@ObjectService.Decorators'][key] = instanceDecorators[key].clone(that);
-                //decorators.push(instanceDecorators[key]);
+        Object.defineProperty(that, '@ObjectService.Instance', {
+            configurable: false,
+            enumerable: false,
+            value: true,
+            writable: false
+        });
+        //Object.defineProperty(that, '@ObjectService.ModulePath', {
+        //    configurable: false,
+        //    enumerable: true,
+        //    value: obd.modulePath,
+        //    writable: false
+        //});
+        //Object.defineProperty(that, '@ObjectService.TypeName', {
+        //    configurable: false,
+        //    enumerable: true,
+        //    value: original.name,
+        //    writable: false
+        //});
+        Object.defineProperty(that, '@ObjectService.Decorators', {
+            configurable: false,
+            enumerable: false,
+            value: {},
+            writable: false
+        });
 
-                that['@ObjectService.Decorators'][key].instantiate();
-            }
+        //get decorators from prototype:
+
+        //let decorators: memberDecorator[] = [];
+
+
+        for (let key in instanceDecorators) {
+            that['@ObjectService.Decorators'][key] = instanceDecorators[key].clone(that);
+            //decorators.push(instanceDecorators[key]);
+
+            that['@ObjectService.Decorators'][key].instantiate();
+        }
         //}
     }
 
@@ -2158,13 +2158,13 @@ export class obp {
         return eval('(function(host, args){try {return Object.getOwnPropertyDescriptor(host, "' + member + '");} catch(ex){return null;}})')(host)
     }
     static analyzePath(value: (() => any) | string | (string[])): string[] {
-        if (!value) return[];
+        if (!value) return;
         let code: string;
         let result: string[] = [];
         if (obs.isFunction(value)) {
             let f: Function = <any>value;
             code = f.toString();
-            let mr = /(return|\s*\(\s*\)\s*=>)\s+/ig.exec(code); // need to match return or ()=> for ES5 and ES6
+            let mr = /return\s+/ig.exec(code);
             code = code.substr(mr.index + mr[0].length);
         }
         else {
@@ -2499,7 +2499,7 @@ export class obs {
             return value;
         }
     }
-    static parseReviver(key: any, value: any){
+    static parseReviver(key: any, value: any) {
         //console.log('reviver: ', 'key: ', key, 'value: ', value);
         if (value['@Serializable.ModuleName'] && value['@Serializable.TypeName']) {
             //console.log('function from required module');
@@ -2545,7 +2545,7 @@ export class obs {
     static appendMethodAfter(target: Object, member: (() => any) | string, host: Object, method: Function): ITrigger {
         let memberName = obp.analyzeMember(member);
         let decorator = obs.getDecorator(target, memberName, true);
-        let trigger = {target: host, method: (source: Object, key: string, decorators: memberDecorator[], ...args: any[]) => method.apply(host, args)};
+        let trigger = { target: host, method: (source: Object, key: string, decorators: memberDecorator[], ...args: any[]) => method.apply(host, args) };
         if (decorator) decorator.afters.push(trigger);
         return trigger;
     }
@@ -2922,11 +2922,11 @@ export class obs {
         //console.log('typeof: ', typeof jsonObject);
         //switch (typeof jsonObject) {
         //    case 'object':
-                
+
         //    case 'array':
 
         //}
-        
+
         if (typeof jsonObject != 'object') return jsonObject;
         //console.log('found object: ', jsonObject);
         if (jsonObject['@ObjectService.ObservableArray']) {
@@ -2963,7 +2963,7 @@ export class obs {
                         }
                     }
                     else {
-                        
+
                         try {
                             instance[property] = await obs.deserialize(jsonObject[property]);
                         }
@@ -3000,7 +3000,7 @@ export class obs {
             }
             return instance;
         }
- 
+
     }
     private static serializationReplacer(key: string, value: any) {
         //console.log('replacer: ', key, value);
@@ -3157,7 +3157,7 @@ export class obs {
             arr.push(JSON.stringify(value, objectReplacer));
             index += 1;
         }
- 
+
         //console.log('serialized array:', arr);
         return JSON.stringify(arr);
     }
@@ -3172,7 +3172,7 @@ export class obs {
         }
         if (typeof arr != 'object') return;
         if (!Array.isArray(arr)) return;
-        let unpacker = new Unpacker(arr); 
+        let unpacker = new Unpacker(arr);
         return await unpacker.unpack();
     }
 }
@@ -3185,7 +3185,7 @@ class Unpacker {
     public async unpack() {
         return await this.getInstance(0);
     }
-    public instances: { [key: number]: any } = {}; 
+    public instances: { [key: number]: any } = {};
     public async getInstance(key: number) {
         //console.log('getInstance for ', key);
         if (this.instances[key]) return this.instances[key];
@@ -3348,7 +3348,7 @@ export class ObservableArray<T> extends Array<T> {
             writable: false
         });
         Array.prototype.push.apply(this, items);
-        Array.prototype.push.apply(this.itemListeners, items.map(item => new itemListener(this, item, this.childrenListenPaths))); 
+        Array.prototype.push.apply(this.itemListeners, items.map(item => new itemListener(this, item, this.childrenListenPaths)));
     }
     /**in objectDecorator.observable and obs.makeObservable, this will prevent the set method from sending 'set' event for internal operations when it is true.*/
     public inOverwrittenOperation: boolean = false;
@@ -4291,7 +4291,7 @@ module observeTest {
 
             @obs.listen(() => Host.prototype.children.onchange).event
             public listenOb = () => {
-            
+
             }
         }
         @obs.bindable
@@ -4308,4 +4308,3 @@ module observeTest {
     }
 }
 
-if (module) module.exports = exports;
